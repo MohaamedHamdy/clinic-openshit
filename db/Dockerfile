@@ -8,9 +8,12 @@ ENV POSTGRES_DB tools
 # Copy the init.sql into the container
 COPY init.sql /docker-entrypoint-initdb.d/
 
-RUN chown -R 1009730000:1009730000 /var/lib/postgresql/data
+# Change permissions within the /docker-entrypoint-initdb.d/ directory
+# (If necessary, adjust the path based on your requirements)
+USER root
+RUN chown -R postgres:postgres /docker-entrypoint-initdb.d/
 
-
+# Switch back to the postgres user
 USER postgres
 
 # Expose the PostgreSQL port
