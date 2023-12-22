@@ -11,5 +11,7 @@ VOLUME /var/lib/postgresql/data
 # Copy the init.sql into the container
 COPY init.sql /docker-entrypoint-initdb.d/
 
+USER node
+
 # Expose the PostgreSQL port
 EXPOSE 5432
