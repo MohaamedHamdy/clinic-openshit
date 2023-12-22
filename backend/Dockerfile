@@ -18,6 +18,8 @@ ENV PORT=3001 \
 # Expose the port that your Node.js app will run on
 EXPOSE $PORT
 
+RUN chown -R 1009730000:0 /.npm
+
 
 # Script to wait for the database
 CMD ["npm", "start"]
