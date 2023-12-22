@@ -1,28 +1,23 @@
-FROM node:latest
+FROM node:14
 
-WORKDIR /app
+# Set working directory
+WORKDIR /usr/src/app
 
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
+# Install dependencies
 RUN npm install
 
+# Copy application code
 COPY . .
 
-ENV PORT=3001 \
-    DB_USER=postgres \
-    DB_HOST=localhost \
-    DB_NAME=tools \
-    DB_PASSWORD=2314 \
-    DB_PORT=5432
+# Set the user to a non-root user
+USER node
 
-# Expose the port that your Node.js app will run on
-EXPOSE $PORT
-
-RUN chown -R 1009730000:0 /.npm
-
-
-# Script to wait for the database
+# Start the application
 CMD ["npm", "start"]
+
 
 # docker run --name backendcont --network=mynetwor -p 3001:3001 -e PORT=3001 -e DB_USER=postgres -e DB_HOST=db -e DB_NAME=tools -e DB_PASSWORD=2314 -e DB_PORT=5432 backend
 # docker run --name db --network=mynetwor  -v postgres_data:/var/lib/postgresql/data -p 5432:5432 database
